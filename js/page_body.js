@@ -3,7 +3,7 @@
 const e = React.createElement;
 
 const setting = {
-  sizeAtPage: 10
+  sizeAtPage: 13
 };
 
 let voice = new Audio();
@@ -51,7 +51,7 @@ function createWordTable(data, page){
   
   return (
     e("div", { id: 'topView'},
-      e('button',{id:'button', onClick: () =>{alert('test');}},"test"), 
+      //e('button',{id:'button', onClick: () =>{alert('test');}},"test"), 
       e("table", { className: 'viewTable'},
         e("tbody", {},tr_list)
       )
