@@ -2,6 +2,7 @@
   border-collapse: collapse;
   border:1px solid #333;
   padding:6px 6px 6px 6px;
+  font-size: 1.35em;
 }
 /*
 .pageButton{
@@ -20,6 +21,7 @@
   background: #ffffff;
   border-radius: 3px;
   transition: .4s;
+  font-size: 1em;
 }
 
 .on {
