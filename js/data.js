@@ -1,5 +1,5 @@
 
-let wordData = [
+let charData = [
     ["hiragana", "あ", "い", "う", "え", "お", "あ.mp3", "い.mp3", "う.mp3", "え.mp3", "お.mp3"],
     ["hiragana", "か", "き", "く", "け", "こ", "か.mp3", "き.mp3", "く.mp3", "け.mp3", "こ.mp3"],
     ["hiragana", "さ", "し", "す", "せ", "そ", "さ.mp3", "し.mp3", "す.mp3", "せ.mp3", "そ.mp3"],
@@ -15,4 +15,11 @@ let wordData = [
 ];
 //    1:{"LAOWord":"laoWord", "JPWord":"JPWord", "JPKanzi":"JPKanzi"}
 
+let wordData = [
+    //["Lao-JP", "LaoWord", "JPWord", "JPKanzi", ".mp3"],
+    ["Lao-JP", "ຊື້", "かう", "買う", "買う.mp3"]
+];
 
+let sentenceData = [
+    ["Lao-JP", "ຊື້", "りんご(ແອັບເປີນ) を かう(ຊື້)", "りんごを買う.mp3"]
+]
