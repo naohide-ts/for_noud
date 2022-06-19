@@ -1,51 +1,17 @@
-body {
-    font: 14px "Century Gothic", Futura, sans-serif;
-    margin: 20px;
-  }
-  
-  ol, ul {
-    padding-left: 30px;
-  }
-  
-  .board-row:after {
-    clear: both;
-    content: "";
-    display: table;
-  }
-  
-  .status {
-    margin-bottom: 10px;
-  }
-  
-  .square {
-    background: #fff;
-    border: 1px solid #999;
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 34px;
-  }
-  
-  .square:focus {
-    outline: none;
-  }
-  
-  .kbd-navigation .square:focus {
-    background: #ddd;
-  }
-  
-  .game {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .game-info {
-    margin-left: 20px;
-  }
-  
+.viewTable {
+  border: 11px;
+  /*margin-top: 100px;*/ /*見やすさを考慮し、画面上部に空間を入れる*/
+  /*width: 100%;*/       /*画面の横幅を最大に設定*/
+}
+
+.viewTable,.viewTable tr,.viewTable td{
+  border-collapse: collapse;
+  border:1px solid #333;
+  padding:5px 5px 5px 5px;
+}
+
+/*
+.viewTable td{
+
+}
+*/
