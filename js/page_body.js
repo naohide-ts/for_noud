@@ -20,8 +20,24 @@ function pronounce(voiceStr){
   console.log(voicePath);
 }
 
-function createWordTable(data, page){
-  
+function clickPageButton(parent, buttonNum, buttonId){
+  let selectedButon = parent.state.selectedButon;
+
+  if(selectedButon!=buttonNum){
+    document.getElementById("hiraganaButton").classList.remove('on');
+    document.getElementById("button2").classList.remove('on');
+    document.getElementById("button3").classList.remove('on');
+    document.getElementById("hiraganaButton").classList.add('off');
+    document.getElementById("button2").classList.add('off');
+    document.getElementById("button3").classList.add('off');
+    document.getElementById(buttonId).classList.remove('off');  
+    document.getElementById(buttonId).classList.add('on');
+    parent.state.selectedButon = buttonNum;
+  }
+}
+
+function createPage(data, parent){
+  let page = parent.state.page;
   let tr_list = [];
 
   for(let i = 0; i < setting.sizeAtPage; i++){
@@ -49,59 +65,40 @@ function createWordTable(data, page){
    tr_list.push(e("tr", {key: 'row'+String(i)},tdList));
   }
   
+
+  let hiraganaButtonStr = 'off', button2Str = 'off', button3Str = 'off';
+
+  if(parent.state.selectedButon==0){
+    hiraganaButtonStr = 'on';
+  }else if(parent.state.selectedButon==1){
+    button2Str = 'on';
+  }else if(parent.state.selectedButon==2){
+    button3Str = 'on';
+  }
+
   return (
     e("div", { id: 'topView'},
-      //e('button',{id:'button', onClick: () =>{alert('test');}},"test"), 
+      e('button',{className:'btn-flat-simple ' + hiraganaButtonStr, id:'hiraganaButton', 
+        onClick: () =>{clickPageButton(parent, 0, 'hiraganaButton');}},"ຕົວອັກສອນພາສາຍີ່ປຸ່ນ"),
+      e('button',{className:'btn-flat-simple ' + button2Str, id:'button2', 
+        onClick: () =>{clickPageButton(parent, 1, 'button2');}},"\u00A0\u00A0ຄໍາ\u00A0\u00A0"), 
+      e('button',{className:'btn-flat-simple ' + button3Str, id:'button3', 
+        onClick: () =>{clickPageButton(parent, 2, 'button3');}},"ປະໂຫຍກ"),  
       e("table", { className: 'viewTable'},
         e("tbody", {},tr_list)
       )
     )
   );
-  
-  /* ok 
- return e(
-  'button',
-  { onClick: () =>{alert('test'); }},
-  'Like'
-  );
-  */
 }
 
 class WordTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { page: 0};
+    this.state = { page: 0, selectedButon: 0};
   }
 
-  render() {
-    /*
-    if (this.state.liked) {
-      return 'You liked this.';
-    }
-    */
-    /*
-    return e(
-      'button',
-      { onClick: () =>{ 
-        alert('test'); 
-      }},
-      'Like'
-    );
-    */
-    
-    /*
-    return (
-      e("ul", { className: 'shiritori' }, 
-        e("li", null, 'コアラ'), 
-        e("li", null, 'ラッパ'), 
-        e("li", null, 'パリ'), 
-        e("li", null, 'リンゴ')
-      )
-    );
-    */
-    
-    
-    return createWordTable(wordData, this.state.page);
+  render() {    
+    return createPage(wordData, this);
   }
 }
 
