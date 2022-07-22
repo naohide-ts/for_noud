@@ -19,7 +19,7 @@ function pronounce(voiceStr){
   console.log(voicePath);
 }
 
-function clickPageButton(parent, buttonNum){
+function clickContentBtn(parent, buttonNum){
   let selectedButon = parent.state.selectedButon;
 
   if(selectedButon!=buttonNum){
@@ -33,19 +33,49 @@ function clickPageButton(parent, buttonNum){
   }
 }
 
-function createPage(parent){
-  let page = parent.state.page;
+function clickMode1PageBtn(parent, buttonNum){
+  let selectedButon = parent.state.mode1Page;
 
+  if(selectedButon!=buttonNum){
+    let newButtonStrs = []
+    for(let i = 0; i < parent.state.mode1BtnStrs.length; i++){
+      newButtonStrs.push('off');
+    }
+ 
+    newButtonStrs[buttonNum] = 'on';
+    parent.setState({mode1Page:buttonNum, mode1BtnStrs:newButtonStrs});
+  }
+}
+
+function clickMode2PageBtn(parent, buttonNum){
+  let selectedButon = parent.state.mode2Page;
+
+  if(selectedButon!=buttonNum){
+    let newButtonStrs = []
+    for(let i = 0; i < parent.state.mode2BtnStrs.length; i++){
+      newButtonStrs.push('off');
+    }
+ 
+    newButtonStrs[buttonNum] = 'on';
+    parent.setState({mode2Page:buttonNum, mode2BtnStrs:newButtonStrs});
+  }
+}
+
+
+function createContent(parent){
   let topViewElems = [
     e('button',{key:"button0", className:'btn-flat-simple ' + parent.state.buttonStrs[0], id:'hiraganaButton', 
-      onClick: () =>{clickPageButton(parent, 0);}},"ຕົວອັກສອນພາສາຍີ່ປຸ່ນ"),
+      onClick: () =>{clickContentBtn(parent, 0);}},"ຕົວອັກສອນພາສາຍີ່ປຸ່ນ"),
     e('button',{key:"button1", className:'btn-flat-simple ' + parent.state.buttonStrs[1], id:'word', 
-      onClick: () =>{clickPageButton(parent, 1);}},"\u00A0\u00A0ຄໍາ\u00A0\u00A0"), 
+      onClick: () =>{clickContentBtn(parent, 1);}},"\u00A0\u00A0ຄໍາ\u00A0\u00A0"), 
     e('button',{key:"button2", className:'btn-flat-simple ' + parent.state.buttonStrs[2], id:'sentence', 
-      onClick: () =>{clickPageButton(parent, 2);}},"ປະໂຫຍກ")  
+      onClick: () =>{clickContentBtn(parent, 2);}},"ປະໂຫຍກ"),
+    e('br',{key:"br"}),
+    
   ];
 
   if(parent.state.selectedButon==0){
+    let page = parent.state.page;
     let data = charData; 
     let tr_list = [];
 
@@ -76,8 +106,24 @@ function createPage(parent){
     
     topViewElems.push(e("table", { key:"charTable", className: 'viewTable'},e("tbody", {}, tr_list)));
   }else if(parent.state.selectedButon==1){
+    let page = parent.state.mode1Page;
     let data = wordData; 
     let tr_list = [];
+    let pageBtnNum =  Math.ceil(data.length / setting.sizeAtPage);
+
+    if(parent.state.mode1BtnStrs.length != pageBtnNum){
+      for(let i = 0; i < pageBtnNum; i++){
+        parent.state.mode1BtnStrs.push("off");
+      }
+      parent.state.mode1BtnStrs[page] = "on";
+    }
+
+    for(let i = 0; i < pageBtnNum; i++){
+      topViewElems.push(
+        e('button',{key:"pageBtn" + i.toString(), className:'btn-flat-simple ' + parent.state.mode1BtnStrs[i], id:'pageBtn', 
+          onClick: () =>{clickMode1PageBtn(parent, i)}}, i.toString()),
+        );
+    }
 
     for(let i = 0; i < setting.sizeAtPage; i++){
       let dataIndex = setting.sizeAtPage * page + i;
@@ -105,8 +151,25 @@ function createPage(parent){
     
     topViewElems.push(e("table", { key:"charTable", className: 'viewTable'},e("tbody", {}, tr_list)));
   }else if(parent.state.selectedButon==2){
+    let page = parent.state.mode2Page;
     let data = sentenceData; 
     let tr_list = [];
+    let pageBtnNum =  Math.ceil(data.length / setting.sizeAtPage);
+
+    if(parent.state.mode2BtnStrs.length != pageBtnNum){
+      for(let i = 0; i < pageBtnNum; i++){
+        parent.state.mode2BtnStrs.push("off");
+      }
+      parent.state.mode2BtnStrs[page] = "on";
+    }
+
+    for(let i = 0; i < pageBtnNum; i++){
+      topViewElems.push(
+        e('button',{key:"pageBtn" + i.toString(), className:'btn-flat-simple ' + parent.state.mode2BtnStrs[i], id:'pageBtn', 
+          onClick: () =>{clickMode2PageBtn(parent, i)}}, i.toString()),
+        );
+    }
+
 
     for(let i = 0; i < setting.sizeAtPage; i++){
       let dataIndex = setting.sizeAtPage * page + i;
@@ -144,13 +207,17 @@ class WordTable extends React.Component {
     super(props);
     this.state = { 
       page: 0, 
+      mode1Page: 0,
+      mode2Page: 0,
       selectedButon: 0, 
-      buttonStrs: ['on', 'off', 'off']
+      buttonStrs: ['on', 'off', 'off'],
+      mode1BtnStrs: [],
+      mode2BtnStrs: [],
     };
   }
 
   render() {    
-    return createPage(this);
+    return createContent(this);
   }
 }
 

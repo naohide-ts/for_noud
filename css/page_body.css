@@ -2,7 +2,7 @@
   border-collapse: collapse;
   border:1px solid #333;
   padding:6px 6px 6px 6px;
-  font-size: 1.35em;
+  font-size: 5.5vw;
 }
 /*
 .pageButton{
@@ -21,7 +21,7 @@
   background: #ffffff;
   border-radius: 3px;
   transition: .4s;
-  font-size: 1em;
+  font-size: 4vw;
 }
 
 .on {
@@ -29,5 +29,5 @@
 }
 
 #createdBy {	
-  font-size:10
+  font-size:1vw
 }
